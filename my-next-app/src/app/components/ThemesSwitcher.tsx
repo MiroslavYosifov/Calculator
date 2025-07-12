@@ -18,7 +18,7 @@ export default function ThemesSwitcher() {
             onClick={() => setIsDark(!isDark)}
             className="primary-bgr-color primary-txt-color px-4 py-2 bg-gray-300 rounded"
         >
-            Toggle Theme
+            Toggle Theme111
         </button>
     )
 }
