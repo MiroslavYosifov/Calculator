@@ -1,4 +1,4 @@
-export default function AboutPage() {
+export default function FoodPage() {
   return (
     <main>
       <h1>Food</h1>
