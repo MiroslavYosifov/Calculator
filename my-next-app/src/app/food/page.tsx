@@ -1,35 +1,34 @@
 "use client";
-import { useState } from "react";
-import { foodData } from "../lib/foodData";
+import { useState, useEffect } from "react";
 import SearchBar from "./SearchBar";
-import Image from "next/image";
 
 export default function FoodPage() {
-  const [filteredFood, setFilteredFood] = useState(foodData);
+  let API_KEY = "b2svYKIPS7EGn94zTympZI58vbW8N2MuNjFS0MT2";
 
-  const handleSearch = (query: string) => {
-    const filteredFoodResult = foodData.filter(({ name }) => {
-      return name.toLocaleLowerCase().includes(query.toLocaleLowerCase());
-    });
+  const [products, setProducts] = useState([]);
 
-    setFilteredFood(filteredFoodResult);
-    console.log(filteredFoodResult, "filteredFood");
+  const handleSearch = async (query: string) => {
+    try {
+      if (query.length == 0) return;
+
+      const res = await fetch(
+        `https://api.nal.usda.gov/fdc/v1/foods/search?query=${query}&dataType=Foundation&requireAllWords=true&api_key=${API_KEY}`
+      );
+      const resData = await res.json();
+
+      setProducts(resData.foods);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
     <main className="bg-[#424d5e] w-full h-screen text-white">
       <SearchBar onSearch={handleSearch} />
       <section className="flex justify-evenly flex-wrap">
-        {filteredFood.length > 0 ? (
-          filteredFood.map(({ id, name, image }) => (
-            <div key={id} className="w-[50%]">
-              <Image src={image} alt="Product Image" width={180} height={200} />
-              <span className="item-name text-center block">{name}</span>
-            </div>
-          ))
-        ) : (
-          <p>No foods found111 :/</p>
-        )}
+        {products.map((product, key) => (
+          <h1 key={key}>{key}</h1>
+        ))}
       </section>
     </main>
   );
