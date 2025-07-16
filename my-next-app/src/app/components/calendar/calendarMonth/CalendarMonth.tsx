@@ -2,28 +2,26 @@
 
 import { startOfMonth, endOfMonth, startOfWeek, endOfWeek, addDays, format, isSameMonth, isToday } from 'date-fns';
 import { useState } from 'react';
+import DayBox from './DayBox';
 
 export default function CalendarMonth() {
-  const [currentDate, setCurrentDate] = useState(new Date());
+    const [currentDate, setCurrentDate] = useState(new Date());
 
-  const generateCalendar = () => {
+    const generateCalendar = () => {
     const start = startOfWeek(startOfMonth(currentDate), { weekStartsOn: 1 }); // Monday
     const end = endOfWeek(endOfMonth(currentDate), { weekStartsOn: 1 });
-
     const dateMatrix = [];
-    let date = start;
 
+    let date = start;
     while (date <= end) {
       const week = [];
-
       for (let i = 0; i < 7; i++) {
         week.push(date);
         date = addDays(date, 1);
       }
-
       dateMatrix.push(week);
     }
-
+    
     return dateMatrix;
   };
 
@@ -52,22 +50,14 @@ export default function CalendarMonth() {
       </div>
 
       <div className="grid grid-cols-7 gap-1 pt-2 text-sm">
-        {calendar.flat().map((day, idx) => {
-          const isCurrentMonth = isSameMonth(day, currentDate);
-          const today = isToday(day);
-
-          return (
-            <div
-              key={idx}
-              className={`p-2 h-16 border rounded text-center
-                ${isCurrentMonth ? '' : 'text-gray-400'}
-                ${today ? 'bg-blue-500 text-white font-bold' : ''}
-              `}
-            >
-              {format(day, 'd')}
-            </div>
-          );
-        })}
+       {calendar.flat().map((day, idx) => (
+          <DayBox
+            key={idx}
+            formattedDay={format(day, 'd')}
+            isCurrentMonth={isSameMonth(day, currentDate)}
+            today={isToday(day)}
+          />
+        ))}
       </div>
     </div>
   );
