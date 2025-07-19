@@ -31,7 +31,6 @@ export default function RootLayout({
       >
         <header>
           <Nav/>
-          <ThemesSwitcher/>
         </header>
         {children}
       </body>

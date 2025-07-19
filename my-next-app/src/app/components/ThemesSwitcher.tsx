@@ -16,7 +16,7 @@ export default function ThemesSwitcher() {
     return (
         <button
             onClick={() => setIsDark(!isDark)}
-            className="primary-bgr-color primary-txt-color px-4 py-2 bg-gray-300 rounded"
+            className="bg-[var(--color-primary)] text-[var(--color-secondary)] px-4 py-2 rounded"
         >
             Toggle Theme
         </button>
