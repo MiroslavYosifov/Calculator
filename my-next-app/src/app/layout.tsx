@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import { Suspense } from 'react'
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Nav from './components/Nav'; // Adjust the path if needed
-import ThemesSwitcher from "./components/ThemesSwitcher";
+import { NavigationEvents } from './components/navigation-events';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,6 +34,9 @@ export default function RootLayout({
           <Nav/>
         </header>
         {children}
+        <Suspense fallback={null}>
+          <NavigationEvents />
+        </Suspense>
       </body>
     </html>
   );
