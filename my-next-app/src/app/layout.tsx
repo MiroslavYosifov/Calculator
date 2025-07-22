@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Suspense } from 'react'
+import ReduxProvider from '@/redux/provider';
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Nav from './components/Nav'; // Adjust the path if needed
@@ -33,7 +34,9 @@ export default function RootLayout({
         <header>
           <Nav/>
         </header>
-        {children}
+         <ReduxProvider>
+          {children}
+        </ReduxProvider>
         <Suspense fallback={null}>
           <NavigationEvents />
         </Suspense>
